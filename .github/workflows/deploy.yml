@@ -72,10 +72,13 @@ jobs:
         working-directory: ./backend-project
         id: check-coverage
         run: |
-          set -e # Exit on any error
-          npm run test:cov > coverage.txt || true # Ignore errors and continue
-          
-          COVERAGE=$(grep -Po 'All files.*?\K\d+(?=%)' coverage.txt)
+          echo "Running test coverage..."
+          npm run test:cov > coverage.txt || echo "Coverage command failed but continuing..."
+
+          echo "Coverage output:"
+          cat coverage.txt # Display the coverage result for debugging
+
+          COVERAGE=$(grep -Po 'All files.*?\K\d+(?=%)' coverage.txt || echo 0) # Default to 0 if not found
 
           echo "Test coverage is: $COVERAGE%"
 
