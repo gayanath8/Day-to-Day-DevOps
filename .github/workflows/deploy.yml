@@ -63,10 +63,14 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: "npm"
       - name: Install dependencies
+        working-directory: ./backend-project
         run: yarn install --frozen-lockfile
       - name: Run unit tests
+        working-directory: ./backend-project
         run: yarn test
       - name: Check code coverage
+        working-directory: ./backend-project
+        id: check-coverage
         run: |
           npm run test:cov > coverage.txt
 
@@ -75,11 +79,11 @@ jobs:
           echo "Test coverage is: $COVERAGE%"
 
           if [ "$COVERAGE" -ge 60 ]; then
-          echo "Coverage is above 60%, proceeding with backend deployment."
-          echo "deploy-be-changes=true" >> $GITHUB_OUTPUT
+            echo "Coverage is above 60%, proceeding with backend deployment."
+            echo "deploy-be-changes=true" >> $GITHUB_OUTPUT
           else
-          echo "Coverage is below 60%, skipping backend deployment."
-          echo "deploy-be-changes=false" >> $GITHUB_OUTPUT
+            echo "Coverage is below 60%, skipping backend deployment."
+            echo "deploy-be-changes=false" >> $GITHUB_OUTPUT
 
   backend-deploy:
     needs: unit-test
