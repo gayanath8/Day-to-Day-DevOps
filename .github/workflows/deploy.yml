@@ -31,18 +31,18 @@ jobs:
 
           if echo "$CHANGED_FILES" | grep -q "backend-project/"; then
             echo "Backend changes detected."
-            echo "backend-changes=true" >> $GITHUB_OUTPUT
+            echo "::set-output name=backend-changes::true"
           else
             echo "No Backend changes detected."
-            echo "backend-changes=false" >> $GITHUB_OUTPUT
+            echo "::set-output name=backend-changes::false"
           fi
 
           if echo "$CHANGED_FILES" | grep -q "frontend-project/"; then
             echo "Frontend changes detected."
-            echo "frontend-changes=true" >> $GITHUB_OUTPUT
+            echo "::set-output name=frontend-changes::true"
           else
             echo "No Frontend changes detected."
-            echo "frontend-changes=false" >> $GITHUB_OUTPUT
+            echo "::set-output name=frontend-changes::false"
           fi
 
   unit-test:
@@ -83,11 +83,13 @@ jobs:
           COVERAGE_THRESHOLD=60.0
           if awk "BEGIN {exit !($COVERAGE >= $COVERAGE_THRESHOLD)}"; then
             echo "Coverage is above 60%, proceeding with backend deployment."
-            echo "deploy-be-changes=true" >> $GITHUB_ENV
+            echo "::set-output name=deploy-be-changes::true"
           else
             echo "Coverage is below 60%, skipping backend deployment."
-            echo "deploy-be-changes=false" >> $GITHUB_ENV
+            echo "::set-output name=deploy-be-changes::false"
           fi
+    outputs:
+      deploy-be-changes: ${{ steps.check-coverage.outputs.deploy-be-changes }}
 
   backend-deploy:
     needs: unit-test
