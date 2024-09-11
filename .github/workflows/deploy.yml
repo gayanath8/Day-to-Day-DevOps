@@ -50,8 +50,6 @@ jobs:
     needs: changes
     if: needs.changes.outputs.backend-changes == 'true'
     runs-on: ubuntu-latest
-    outputs:
-      deploy-be-changes: ${{ steps.unit-test.outputs.deploy-be-changes }}
     strategy:
       matrix:
         node-version: [20.x]
@@ -85,10 +83,10 @@ jobs:
           COVERAGE_THRESHOLD=60.0
           if awk "BEGIN {exit !($COVERAGE >= $COVERAGE_THRESHOLD)}"; then
             echo "Coverage is above 60%, proceeding with backend deployment."
-            echo "deploy-be-changes=true" >> $GITHUB_OUTPUT
+            echo "deploy-be-changes=true" >> $GITHUB_ENV
           else
             echo "Coverage is below 60%, skipping backend deployment."
-            echo "deploy-be-changes=false" >> $GITHUB_OUTPUT
+            echo "deploy-be-changes=false" >> $GITHUB_ENV
           fi
 
   backend-deploy:
