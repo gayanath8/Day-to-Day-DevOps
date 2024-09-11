@@ -1,17 +1,17 @@
-FROM node:18-alpine 
+FROM node:20-alpine as build
 
 WORKDIR /app
 
-COPY package*.json ./
+COPY ./frontend-project .
 
-RUN yarn install
+RUN CI=false yarn install
 
-COPY . .
+ARG ARG_VAR
+ENV ARG_VAR $ARG_VAR
 
-RUN yarn build
+RUN CI=false yarn build
 
-FROM nginx:alpine
-
+FROM nginx:stable-alpine
 COPY --from=build /app/dist /usr/share/nginx/html
 
 EXPOSE 5173

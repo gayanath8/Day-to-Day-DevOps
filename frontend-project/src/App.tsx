@@ -34,6 +34,9 @@ function App() {
           <p>Backend says: {data}</p>
         )}
       </div>
+      <div>
+        {import.meta.env.ARG_VAR || 'Variable Not Provided'}
+      </div>
     </div>
   );
 }
