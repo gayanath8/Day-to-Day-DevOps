@@ -124,7 +124,7 @@ jobs:
           IMAGE_TAG: ${{ github.head_ref || github.ref_name }}
         run: |
           # Build a docker container and push it to ECR 
-          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -f backend-project/ .
+          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -f backend-project/Dockerfile .
           echo "Pushing backend image to ECR..."
         #   docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
         #   echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
