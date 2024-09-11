@@ -29,7 +29,7 @@ jobs:
         run: |
           CHANGED_FILES=$(git diff --name-only HEAD^ HEAD)
 
-          if echo "$CHANGED_FILES" | grep -q "backend/"; then
+          if echo "$CHANGED_FILES" | grep -q "backend-project/"; then
             echo "Backend changes detected."
             echo "backend-changes=true" >> $GITHUB_OUTPUT
           else
@@ -37,7 +37,7 @@ jobs:
             echo "backend-changes=false" >> $GITHUB_OUTPUT
           fi
 
-          if echo "$CHANGED_FILES" | grep -q "frontend/"; then
+          if echo "$CHANGED_FILES" | grep -q "frontend-project/"; then
             echo "Frontend changes detected."
             echo "frontend-changes=true" >> $GITHUB_OUTPUT
           else
