@@ -2,18 +2,12 @@ version: "3.8"
 
 services:
   frontend:
-    build:
-      context: .
-      dockerfile: ./frontend-project/Dockerfile
-      args:
-        ARG_VAR: "This is Arg"
+    image: "image"
     ports:
       - "5173:5173"
 
   backend:
-    build:
-      context: .
-      dockerfile: ./backend-project/Dockerfile
+    image: "image"
     environment:
       ENV_VAR: "This is ENV"
     ports:

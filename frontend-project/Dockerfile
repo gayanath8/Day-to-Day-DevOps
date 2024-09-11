@@ -6,8 +6,8 @@ COPY ./frontend-project .
 
 RUN CI=false yarn install
 
-ARG ARG_VAR
-ENV ARG_VAR $ARG_VAR
+ARG VITE_APP_ARG_VAR
+ENV VITE_APP_ARG_VAR $ARG_VAR
 
 RUN CI=false yarn build
 

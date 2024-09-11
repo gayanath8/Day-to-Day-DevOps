@@ -6,7 +6,7 @@ services:
       context: .
       dockerfile: ./frontend-project/Dockerfile
       args:
-        ARG_VAR: "This is Arg"
+        VITE_APP_ARG_VAR: "This is Arg"
     ports:
       - "5173:5173"
 

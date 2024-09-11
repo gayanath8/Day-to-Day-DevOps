@@ -124,7 +124,7 @@ jobs:
           IMAGE_TAG: ${{ github.head_ref || github.ref_name }}
         run: |
           # Build a docker container and push it to ECR 
-          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -f Dockerfile .
+          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -f backend-project/ .
           echo "Pushing backend image to ECR..."
         #   docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
         #   echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
@@ -180,7 +180,7 @@ jobs:
           IMAGE_TAG: ${{ github.head_ref || github.ref_name }}
         run: |
           # Build a docker container and push it to ECR 
-          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -f Dockerfile .
+          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG --build-arg VITE_APP_ARG_VAR='ARG' -f frontend-project/Dockerfile .
           echo "Pushing frontend image to ECR..."
       - name: Deploy frontend images to Amazon EC2
         id: deploy-frontend-image
