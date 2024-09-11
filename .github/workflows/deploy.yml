@@ -88,6 +88,7 @@ jobs:
           else
             echo "Coverage is below 60%, skipping backend deployment."
             echo "deploy-be-changes=false" >> $GITHUB_OUTPUT
+          fi
 
   backend-deploy:
     needs: unit-test
